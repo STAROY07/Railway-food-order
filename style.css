@@ -1,0 +1,75 @@
+/* Order Page */
+.order-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #00c6ff, #007bff);
+}
+
+.order-box{
+  background: #fff;
+  width: 500px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.order-box h2{
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.order-box p{
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.order-box label{
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+.order-box input,
+.order-box select{
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.order-box input:focus,
+.order-box select:focus{
+  border-color: #007bff;
+  outline: none;
+}
+
+.food-category{
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.food-category label{
+  font-weight: normal;
+}
+
+.order-box button{
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #28a745;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.order-box button:hover{
+  background: #218838;
+}
