@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manage Restaurants | Railway Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Poppins', sans-serif; background: #0f0e17; color: white; min-height: 100vh; }
+    .sidebar { position: fixed; top: 0; left: 0; width: 240px; height: 100vh; background: rgba(255,255,255,0.04); border-right: 1px solid rgba(255,255,255,0.08); padding: 28px 16px; z-index: 100; display: flex; flex-direction: column; }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 10px 14px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px; }
+    .sidebar-logo .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg,#f7971e,#ffd200); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .sidebar-logo span { font-weight: 800; font-size: 15px; }
+    .nav-item-s { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: rgba(255,255,255,0.55); font-size: 14px; font-weight: 500; text-decoration: none; margin-bottom: 4px; transition: all 0.2s; }
+    .nav-item-s:hover, .nav-item-s.active { background: rgba(247,151,30,0.12); color: #f7971e; }
+    .nav-item-s .ni { font-size: 18px; width: 22px; text-align: center; }
+    .main-content { margin-left: 240px; padding: 32px; min-height: 100vh; }
+    .card-table { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; }
+    .table-dark { --bs-table-bg: transparent; color: rgba(255,255,255,0.85); }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">🚆</div>
+        <span>Rail Admin</span>
+    </div>
+    <a href="admin_dashboard.html" class="nav-item-s"><span class="ni">📊</span> Dashboard</a>
+    <a href="manage_users.html" class="nav-item-s"><span class="ni">👥</span> Users</a>
+    <a href="manage_restaurants.html" class="nav-item-s active"><span class="ni">🍴</span> Restaurants</a>
+    <a href="manage_payments.html" class="nav-item-s"><span class="ni">💳</span> Payments</a>
+    <a href="manage_complaints.html" class="nav-item-s"><span class="ni">⚠️</span> Complaints</a>
+    <a href="manage_feedback.html" class="nav-item-s"><span class="ni">💬</span> Feedback</a>
+</div>
+
+<div class="main-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">🍴 Restaurant Partners</h2>
+            <p class="text-white-50 small">Station food vendors and approval management</p>
+        </div>
+    </div>
+
+    <div class="card-table">
+        <div class="table-responsive">
+            <table class="table table-dark align-middle">
+                <thead>
+                    <tr>
+                        <th>Restaurant</th>
+                        <th>Owner</th>
+                        <th>Station</th>
+                        <th>Cuisine</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="restTbody">
+                    <!-- Rendered by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    requireAdmin();
+    const restaurants = JSON.parse(localStorage.getItem('rf_restaurants') || '[]');
+
+    function renderRestaurants() {
+        const tbody = document.getElementById('restTbody');
+        if (restaurants.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-white-50">No restaurants found</td></tr>';
+            return;
+        }
+        tbody.innerHTML = restaurants.map(r => `
+            <tr>
+                <td><strong>${r.name}</strong><br><small class="text-white-50">${r.email || ''}</small></td>
+                <td>${r.owner || 'N/A'}<br><small class="text-white-50">${r.phone || ''}</small></td>
+                <td><span class="badge bg-secondary">${r.station}</span></td>
+                <td><small>${r.cuisine || 'Multi-Cuisine'}</small></td>
+                <td>
+                    <span class="badge ${r.status === 'Approved' ? 'bg-success' : 'bg-warning text-dark'}">${r.status}</span>
+                </td>
+                <td>
+                    ${r.status !== 'Approved' ? `<button onclick="approveRest(${r.id})" class="btn btn-sm btn-success me-1">Approve</button>` : ''}
+                    <button onclick="deleteRest(${r.id})" class="btn btn-sm btn-outline-danger">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function approveRest(id) {
+        const r = restaurants.find(item => item.id === id);
+        if (r) {
+            r.status = 'Approved';
+            localStorage.setItem('rf_restaurants', JSON.stringify(restaurants));
+            renderRestaurants();
+            showToast(`${r.name} has been approved!`);
+        }
+    }
+
+    function deleteRest(id) {
+        if (confirm("Remove restaurant?")) {
+            const idx = restaurants.findIndex(item => item.id === id);
+            if (idx !== -1) {
+                restaurants.splice(idx, 1);
+                localStorage.setItem('rf_restaurants', JSON.stringify(restaurants));
+                renderRestaurants();
+            }
+        }
+    }
+
+    renderRestaurants();
+</script>
+
+</body>
+</html>

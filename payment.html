@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway | Railway Food Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .pay-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 480px;
+        }
+        .amount-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+        .pay-method {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.2s;
+        }
+        .pay-method:hover, .pay-method.selected {
+            border-color: #f7971e;
+            background: rgba(247, 151, 30, 0.05);
+        }
+        .btn-confirm-pay {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="pay-card">
+    <div class="text-center mb-3">
+        <h4 class="fw-bold mb-1">💳 Secure Railway Payment</h4>
+        <p class="text-muted small">Instant Train Food Booking Confirmation</p>
+    </div>
+
+    <div class="amount-badge" id="amountDisplay">
+        ₹0
+    </div>
+
+    <form id="paymentForm">
+        <label class="form-label fw-semibold text-muted small mb-2">SELECT PAYMENT METHOD</label>
+
+        <label class="pay-method selected" id="method-upi">
+            <div class="d-flex align-items-center gap-2">
+                <input type="radio" name="payment_method" value="UPI (Google Pay / PhonePe / Paytm)" checked>
+                <span class="fw-semibold">⚡ UPI (GPay / PhonePe / Paytm)</span>
+            </div>
+            <span class="badge bg-success">Instant</span>
+        </label>
+
+        <label class="pay-method" id="method-card">
+            <div class="d-flex align-items-center gap-2">
+                <input type="radio" name="payment_method" value="Debit / Credit Card">
+                <span class="fw-semibold">💳 Debit / Credit Card</span>
+            </div>
+            <span class="text-muted small">Visa / Master</span>
+        </label>
+
+        <label class="pay-method" id="method-net">
+            <div class="d-flex align-items-center gap-2">
+                <input type="radio" name="payment_method" value="Net Banking">
+                <span class="fw-semibold">🏦 Net Banking</span>
+            </div>
+            <span class="text-muted small">All Banks</span>
+        </label>
+
+        <label class="pay-method" id="method-cod">
+            <div class="d-flex align-items-center gap-2">
+                <input type="radio" name="payment_method" value="Cash on Seat Delivery">
+                <span class="fw-semibold">💵 Cash on Seat Delivery (COD)</span>
+            </div>
+            <span class="badge bg-secondary">Seat Delivery</span>
+        </label>
+
+        <div id="upiField" class="mt-3">
+            <label class="form-label fw-semibold small">Enter UPI ID</label>
+            <input type="text" id="upiId" class="form-control" placeholder="username@okhdfcbank" value="passenger@upi">
+        </div>
+
+        <button type="submit" class="btn btn-confirm-pay" id="payBtn">
+            Pay & Confirm Order 🚆
+        </button>
+    </form>
+
+    <div class="text-center mt-3">
+        <small class="text-muted">🔒 256-bit Encrypted Railway Payment</small>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    const user = requireAuth('login.html');
+    const pending = JSON.parse(sessionStorage.getItem('rf_pending_checkout') || 'null');
+
+    if (!pending) {
+        alert("No active checkout found.");
+        window.location.href = 'cart.html';
+    }
+
+    document.getElementById('amountDisplay').textContent = '₹' + pending.total;
+
+    document.querySelectorAll('.pay-method').forEach(box => {
+        box.addEventListener('click', () => {
+            document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('selected'));
+            box.classList.add('selected');
+            const radio = box.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+            document.getElementById('upiField').style.display = radio.value.includes('UPI') ? 'block' : 'none';
+        });
+    });
+
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const payBtn = document.getElementById('payBtn');
+        payBtn.disabled = true;
+        payBtn.innerHTML = 'Processing Payment... ⏳';
+
+        const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+        setTimeout(() => {
+            // Save Order to LocalStorage
+            const orders = JSON.parse(localStorage.getItem('rf_orders') || '[]');
+            const orderId = Math.floor(100000 + Math.random() * 900000);
+
+            const newOrder = {
+                id: orderId,
+                user_email: user.email,
+                food_name: pending.items.map(i => `${i.name} x ${i.qty}`).join(', '),
+                items: pending.items,
+                price: pending.total,
+                quantity: pending.items.reduce((s, i) => s + i.qty, 0),
+                total_price: pending.total,
+                station: pending.station,
+                coach: pending.coach,
+                seat_no: pending.seat,
+                pnr: pending.pnr,
+                payment_method: selectedMethod,
+                payment_status: "Paid",
+                order_status: "Preparing",
+                created_at: new Date().toLocaleString()
+            };
+
+            orders.unshift(newOrder);
+            localStorage.setItem('rf_orders', JSON.stringify(orders));
+
+            // Clear Cart and Pending
+            clearCart();
+            sessionStorage.removeItem('rf_pending_checkout');
+            sessionStorage.setItem('rf_last_order', JSON.stringify(newOrder));
+
+            window.location.href = 'payment_success.html';
+        }, 1200);
+    });
+</script>
+
+</body>
+</html>

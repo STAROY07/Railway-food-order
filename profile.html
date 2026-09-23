@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Railway Food Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f0f2f5;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 550px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="dashboard.html">🚆 Railway Food Order</a>
+        <a href="dashboard.html" class="btn btn-outline-light btn-sm">Dashboard</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="profile-card">
+        <div class="text-center">
+            <div class="avatar" id="avatarLetter">U</div>
+            <h4 class="fw-bold mb-1" id="profileNameDisplay">User</h4>
+            <p class="text-muted small" id="profileEmailDisplay">user@example.com</p>
+        </div>
+
+        <div id="alertBox"></div>
+
+        <form id="profileForm" class="mt-4">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Full Name</label>
+                <input type="text" id="profName" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email (Cannot be changed)</label>
+                <input type="email" id="profEmail" class="form-control" readonly disabled>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Contact Mobile</label>
+                <input type="tel" id="profPhone" class="form-control" placeholder="Mobile number">
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Password</label>
+                <input type="password" id="profPass" class="form-control" placeholder="Update password">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2">Save Profile Updates</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <button onclick="logoutUser()" class="btn btn-outline-danger btn-sm rounded-pill px-4">Logout</button>
+        </div>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    const user = requireAuth('login.html');
+    if (user) {
+        document.getElementById('avatarLetter').textContent = (user.name || user.email).charAt(0).toUpperCase();
+        document.getElementById('profileNameDisplay').textContent = user.name || user.email;
+        document.getElementById('profileEmailDisplay').textContent = user.email;
+
+        document.getElementById('profName').value = user.name || '';
+        document.getElementById('profEmail').value = user.email || '';
+        document.getElementById('profPhone').value = user.phone || '';
+        document.getElementById('profPass').value = user.password || '';
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        user.name = document.getElementById('profName').value.trim();
+        user.phone = document.getElementById('profPhone').value.trim();
+        user.password = document.getElementById('profPass').value;
+
+        // update in rf_users
+        const users = JSON.parse(localStorage.getItem('rf_users') || '[]');
+        const idx = users.findIndex(u => u.email.toLowerCase() === user.email.toLowerCase());
+        if (idx !== -1) {
+            users[idx] = user;
+            localStorage.setItem('rf_users', JSON.stringify(users));
+        }
+        localStorage.setItem('rf_current_user', JSON.stringify(user));
+
+        const alertBox = document.getElementById('alertBox');
+        alertBox.innerHTML = '<div class="alert alert-success py-2 small">Profile updated successfully!</div>';
+        setTimeout(() => alertBox.innerHTML = '', 2000);
+    });
+</script>
+
+</body>
+</html>

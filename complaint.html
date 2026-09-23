@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint | Railway Food Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 580px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="dashboard.html">🚆 Railway Food Order</a>
+        <a href="dashboard.html" class="btn btn-outline-light btn-sm">Dashboard</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="form-card">
+        <div class="text-center mb-4">
+            <div style="font-size: 40px;">⚠️</div>
+            <h4 class="fw-bold text-danger">Railway Grievance / Complaint</h4>
+            <p class="text-muted small">We take passenger experience seriously. Submit your issue for instant review.</p>
+        </div>
+
+        <div id="alertBox"></div>
+
+        <form id="complaintForm">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Complaint Subject</label>
+                <select id="subject" class="form-select" required>
+                    <option value="">-- Select Issue Type --</option>
+                    <option value="Food Quality Issue">Food Quality Issue</option>
+                    <option value="Late Delivery">Late Delivery at Station</option>
+                    <option value="Wrong Food Delivered">Wrong Food Delivered</option>
+                    <option value="Packaging Damaged">Packaging Damaged</option>
+                    <option value="Payment / Refund">Payment / Refund Query</option>
+                    <option value="Other Issue">Other Issue</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Train PNR / Order ID (Optional)</label>
+                <input type="text" id="pnr" class="form-control" placeholder="e.g. Order #101 or 10-digit PNR">
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Describe Your Issue</label>
+                <textarea id="message" rows="4" class="form-control" placeholder="Please describe the issue in detail..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-danger w-100 rounded-pill py-2 fw-semibold">Submit Complaint</button>
+        </form>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    const user = requireAuth('login.html');
+
+    document.getElementById('complaintForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const subject = document.getElementById('subject').value;
+        const pnr = document.getElementById('pnr').value;
+        const message = document.getElementById('message').value;
+
+        const complaints = JSON.parse(localStorage.getItem('rf_complaints') || '[]');
+        complaints.unshift({
+            id: Date.now(),
+            user_email: user.email,
+            name: user.name || 'Passenger',
+            subject: subject + (pnr ? ` (${pnr})` : ''),
+            message: message,
+            status: "Pending Investigation",
+            created_at: new Date().toLocaleString()
+        });
+        localStorage.setItem('rf_complaints', JSON.stringify(complaints));
+
+        const alertBox = document.getElementById('alertBox');
+        alertBox.innerHTML = '<div class="alert alert-success py-2">Complaint registered! Our support team will resolve this shortly.</div>';
+        document.getElementById('complaintForm').reset();
+    });
+</script>
+
+</body>
+</html>

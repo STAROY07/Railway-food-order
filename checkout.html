@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Railway Food Order</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    padding: 30px 15px;
+    color: #333;
+}
+.checkout-card{
+    background: white;
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    max-width: 650px;
+    margin: 0 auto;
+}
+.form-control, .form-select {
+    padding: 12px 16px;
+    border-radius: 10px;
+}
+.btn-pay {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #212529;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 14px;
+    border-radius: 50px;
+    border: none;
+    width: 100%;
+    transition: 0.3s;
+}
+.btn-pay:hover {
+    background: linear-gradient(135deg, #e68510, #e6bd00);
+    box-shadow: 0 8px 20px rgba(247,151,30,0.4);
+}
+.order-summary-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="checkout-card">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="fw-bold mb-0">🚆 Train Delivery Details</h3>
+        <a href="cart.html" class="text-muted text-decoration-none small">← Back to Cart</a>
+    </div>
+    <p class="text-muted small mb-4">Enter your journey details to receive food directly at your seat.</p>
+
+    <div class="order-summary-box">
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted">Total Payable Amount:</span>
+            <span class="fs-4 fw-bold text-success" id="checkoutAmount">₹0</span>
+        </div>
+        <div id="itemsSummary" class="small text-muted mt-2"></div>
+    </div>
+
+    <form id="checkoutForm">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Delivery Station</label>
+            <select id="station" class="form-select" required>
+                <option value="">-- Select Delivery Railway Station --</option>
+            </select>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Train PNR Number</label>
+                <input type="text" id="pnr" class="form-control" placeholder="10-digit PNR" maxlength="10" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Coach / Bogie</label>
+                <input type="text" id="coach" class="form-control" placeholder="e.g. B2, S4, A1" required>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Seat / Berth No.</label>
+                <input type="text" id="seat" class="form-control" placeholder="e.g. 42 (Upper/Lower)" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Passenger Contact</label>
+                <input type="tel" id="contact" class="form-control" placeholder="Mobile Number" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-pay">Proceed to Payment 💳</button>
+    </form>
+</div>
+
+<script src="data.js"></script>
+<script>
+    const user = requireAuth('login.html');
+    const cart = getCart();
+
+    if (cart.length === 0) {
+        alert("Your cart is empty. Please add items to proceed.");
+        window.location.href = 'menu.html';
+    }
+
+    const total = getCartTotal();
+    document.getElementById('checkoutAmount').textContent = '₹' + total;
+    document.getElementById('itemsSummary').textContent = cart.map(i => `${i.name} (x${i.qty})`).join(', ');
+
+    if (user && user.phone) {
+        document.getElementById('contact').value = user.phone;
+    }
+
+    const stationSelect = document.getElementById('station');
+    STATIONS.forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st;
+        opt.textContent = st;
+        stationSelect.appendChild(opt);
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const station = document.getElementById('station').value;
+        const pnr = document.getElementById('pnr').value;
+        const coach = document.getElementById('coach').value;
+        const seat = document.getElementById('seat').value;
+        const contact = document.getElementById('contact').value;
+
+        // Store checkout details in temporary session
+        const checkoutData = {
+            station,
+            pnr,
+            coach,
+            seat,
+            contact,
+            total,
+            items: cart
+        };
+        sessionStorage.setItem('rf_pending_checkout', JSON.stringify(checkoutData));
+        window.location.href = `payment.html?amount=${total}`;
+    });
+</script>
+
+</body>
+</html>

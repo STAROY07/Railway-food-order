@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veg Items | Railway Food Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+        .navbar-veg {
+            background: #2e7d32;
+        }
+        .food-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.3s;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .food-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        .food-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .price-tag {
+            color: #2e7d32;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        .btn-add-cart {
+            background: #2e7d32;
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        .btn-add-cart:hover {
+            background: #1b5e20;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-veg sticky-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="dashboard.html">🥗 Railway Food Order (Veg)</a>
+        <div class="d-flex align-items-center gap-2">
+            <a href="menu.html" class="btn btn-outline-light btn-sm">Menu Categories</a>
+            <a href="cart.html" class="btn btn-warning btn-sm position-relative">
+                🛒 Cart <span class="cart-badge badge bg-danger rounded-pill" style="display:none">0</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-success">🥗 Pure Vegetarian Delights</h2>
+        <p class="text-muted">Freshly prepared pure vegetarian dishes delivered straight to your train seat</p>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="form-control form-control-lg fs-6 rounded-pill shadow-sm" placeholder="🔍 Search dishes (Paneer, Biryani, Dosa, Thali...)">
+        </div>
+    </div>
+
+    <div class="row g-4" id="itemsContainer">
+        <!-- Rendered by JS -->
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    requireAuth('login.html');
+
+    const vegItems = [
+        ["Paneer Butter Masala",180,"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80"],
+        ["Shahi Paneer",190,"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&q=80"],
+        ["Kadai Paneer",170,"https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&q=80"],
+        ["Palak Paneer",160,"https://images.unsplash.com/photo-1604579278613-87f2d22b9cb4?w=300&q=80"],
+        ["Matar Paneer",150,"https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=300&q=80"],
+        ["Veg Biryani",140,"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80"],
+        ["Veg Pulao",130,"https://images.unsplash.com/photo-1596797038530-2c107229654b?w=300&q=80"],
+        ["Jeera Rice",110,"https://images.unsplash.com/photo-1516684732162-798a0062be99?w=300&q=80"],
+        ["Steam Rice",100,"https://images.unsplash.com/photo-1536304993881-ff86e0c9c01d?w=300&q=80"],
+        ["Dal Fry",120,"https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&q=80"],
+        ["Dal Tadka",130,"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&q=80"],
+        ["Dal Makhani",150,"https://images.unsplash.com/photo-1600803907087-f56d462fd26b?w=300&q=80"],
+        ["Chole Masala",140,"https://images.unsplash.com/photo-1565363887715-aae7ec2e1f71?w=300&q=80"],
+        ["Rajma Masala",140,"https://images.unsplash.com/photo-1542560534-0a414e74a4ec?w=300&q=80"],
+        ["Aloo Gobi",120,"https://images.unsplash.com/photo-1606923231677-7b83f3e7c14b?w=300&q=80"],
+        ["Aloo Matar",110,"https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=300&q=80"],
+        ["Mix Veg",130,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Veg Kolhapuri",160,"https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=300&q=80"],
+        ["Veg Handi",150,"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80"],
+        ["Veg Korma",170,"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&q=80"],
+        ["Malai Kofta",180,"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&q=80"],
+        ["Veg Manchurian",150,"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80"],
+        ["Veg Hakka Noodles",140,"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80"],
+        ["Veg Fried Rice",140,"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=80"],
+        ["Veg Schezwan Rice",150,"https://images.unsplash.com/photo-1596797038530-2c107229654b?w=300&q=80"],
+        ["Veg Burger",80,"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80"],
+        ["Veg Pizza",150,"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80"],
+        ["Cheese Sandwich",90,"https://images.unsplash.com/photo-1553909489-cd47e0907980?w=300&q=80"],
+        ["Veg Grilled Sandwich",100,"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&q=80"],
+        ["Paneer Sandwich",110,"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&q=80"],
+        ["Masala Dosa",120,"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80"],
+        ["Plain Dosa",100,"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80"],
+        ["Idli Sambhar",80,"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80"],
+        ["Medu Vada",90,"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80"],
+        ["Uttapam",110,"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80"],
+        ["Pav Bhaji",120,"https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&q=80"],
+        ["Misal Pav",100,"https://images.unsplash.com/photo-1565363887715-aae7ec2e1f71?w=300&q=80"],
+        ["Vada Pav",30,"https://images.unsplash.com/photo-1606923231677-7b83f3e7c14b?w=300&q=80"],
+        ["Samosa",25,"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?w=300&q=80"],
+        ["Kachori",30,"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?w=300&q=80"],
+        ["Poha",50,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Upma",60,"https://images.unsplash.com/photo-1596797038530-2c107229654b?w=300&q=80"],
+        ["Veg Cutlet",70,"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?w=300&q=80"],
+        ["French Fries",90,"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&q=80"],
+        ["Spring Roll",110,"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80"],
+        ["Paneer Pakora",120,"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?w=300&q=80"],
+        ["Veg Pakora",80,"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?w=300&q=80"],
+        ["Bhindi Masala",120,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Tinda Masala",110,"https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=300&q=80"],
+        ["Baingan Bharta",130,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Corn Palak",140,"https://images.unsplash.com/photo-1604579278613-87f2d22b9cb4?w=300&q=80"],
+        ["Veg Makhanwala",160,"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80"],
+        ["Veg Jaipuri",150,"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&q=80"],
+        ["Veg Diwani Handi",170,"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&q=80"],
+        ["Veg Hydrabadi",180,"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80"],
+        ["Veg Kofta",160,"https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=300&q=80"],
+        ["Veg Angara",170,"https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&q=80"],
+        ["Veg Mughlai",180,"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80"],
+        ["Veg Tikka Masala",190,"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80"],
+        ["Paneer Tikka",200,"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=300&q=80"],
+        ["Paneer Chilli",170,"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80"],
+        ["Paneer Manchurian",180,"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80"],
+        ["Veg Chowmein",130,"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80"],
+        ["Veg Singapore Noodles",150,"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80"],
+        ["Veg Thai Curry",200,"https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=300&q=80"],
+        ["Veg Momos",100,"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80"],
+        ["Paneer Momos",120,"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80"],
+        ["Veg Frankie",90,"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&q=80"],
+        ["Paneer Frankie",110,"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&q=80"],
+        ["Veg Wrap",100,"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&q=80"],
+        ["Veg Thali",220,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Special Veg Thali",260,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Mini Veg Thali",180,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80"],
+        ["Curd Rice",100,"https://images.unsplash.com/photo-1536304993881-ff86e0c9c01d?w=300&q=80"],
+        ["Lemon Rice",90,"https://images.unsplash.com/photo-1516684732162-798a0062be99?w=300&q=80"]
+    ];
+
+    function renderItems(filter = '') {
+        const container = document.getElementById('itemsContainer');
+        const q = filter.trim().toLowerCase();
+        const filtered = vegItems.filter(item => item[0].toLowerCase().includes(q));
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="col-12 text-center text-muted py-5"><h4>No dishes found</h4><p>Try searching for a different dish name</p></div>';
+            return;
+        }
+
+        container.innerHTML = filtered.map((item, idx) => `
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="food-card">
+                    <img src="${item[2]}" class="food-img" alt="${item[0]}" loading="lazy">
+                    <div class="p-3 d-flex flex-column justify-content-between flex-grow-1">
+                        <div>
+                            <h6 class="fw-bold mb-1 text-dark">${item[0]}</h6>
+                            <div class="price-tag mb-2">₹${item[1]}</div>
+                        </div>
+                        <button onclick="addToCart('${item[0].replace(/'/g, "\\'")}', ${item[1]}, '${item[2]}')" class="btn btn-add-cart w-100 btn-sm py-2">
+                            🛒 Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        renderItems(e.target.value);
+    });
+
+    renderItems();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Food Order System | Fresh Meals On Track</title>
+    <meta name="description" content="Order delicious fresh meals delivered right to your train seat across India. Fast, easy, and tasty!">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* animated orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: float 8s ease-in-out infinite;
+        }
+        .orb-1 { width: 500px; height: 500px; background: #6c63ff; top: -100px; left: -150px; }
+        .orb-2 { width: 400px; height: 400px; background: #f7971e; bottom: -80px; right: -100px; animation-delay: 3s; }
+        .orb-3 { width: 300px; height: 300px; background: #00d2ff; top: 40%; left: 60%; animation-delay: 5s; }
+        @keyframes float {
+            0%,100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* train track line */
+        .track {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(90deg, #f7971e 0, #f7971e 40px, transparent 40px, transparent 60px);
+            opacity: 0.5;
+        }
+
+        /* hero content */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .badge-top {
+            display: inline-block;
+            background: rgba(247,151,30,0.18);
+            border: 1px solid rgba(247,151,30,0.5);
+            color: #f7971e;
+            border-radius: 50px;
+            padding: 6px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            animation: fadeDown 0.6s ease both;
+        }
+
+        h1.hero-title {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 22px;
+            animation: fadeDown 0.7s ease 0.1s both;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #f7971e, #ffd200, #21d4fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeDown 0.7s ease 0.2s both;
+        }
+
+        /* CTA Buttons */
+        .btn-group-hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            animation: fadeDown 0.7s ease 0.3s both;
+        }
+        .btn-hero {
+            padding: 14px 34px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.12);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        .btn-hero:hover::before { transform: translateX(0); }
+        .btn-hero:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+
+        .btn-login    { background: linear-gradient(90deg,#22c55e,#16a34a); color:#fff; }
+        .btn-register { background: linear-gradient(90deg,#3b82f6,#1d4ed8); color:#fff; }
+        .btn-rest     { background: linear-gradient(90deg,#f7971e,#f3a712); color:#fff; }
+        .btn-admin    { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color:#fff; }
+        .btn-admin:hover { background: rgba(255,255,255,0.2); color:#fff; }
+
+        /* ── FEATURES STRIP ── */
+        .features {
+            background: #0f0c29;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.65);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 30px;
+        }
+        .feature-item .icon { font-size: 22px; }
+
+        /* ── CARDS SECTION ── */
+        .cards-section {
+            background: linear-gradient(180deg, #0f0c29 0%, #1a1a2e 100%);
+            padding: 70px 20px;
+        }
+        .section-label {
+            text-align: center;
+            color: #f7971e;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 36px 28px;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .info-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.09);
+            border-color: rgba(247,151,30,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .info-card .icon-wrap {
+            width: 64px; height: 64px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+        .ic-green  { background: rgba(34,197,94,0.15); }
+        .ic-blue   { background: rgba(59,130,246,0.15); }
+        .ic-orange { background: rgba(247,151,30,0.15); }
+        .info-card h5 { font-weight: 700; margin-bottom: 10px; font-size: 18px; }
+        .info-card p  { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6; }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #07060f;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="track"></div>
+
+    <div class="hero-content">
+        <div class="badge-top">🚆 India's #1 Railway Food Platform</div>
+
+        <h1 class="hero-title">
+            Food Delivered<br>
+            <span class="gradient-text">To Your Seat 🍽</span>
+        </h1>
+
+        <p class="hero-sub">
+            Order fresh, hot meals from top restaurants and get them delivered directly to your train seat anywhere across India.
+        </p>
+
+        <div class="btn-group-hero">
+            <a href="login.html"               class="btn-hero btn-login">    🔐 Login</a>
+            <a href="register.html"            class="btn-hero btn-register"> 📝 Register</a>
+            <a href="register_restaurant.html" class="btn-hero btn-rest">     🍴 Register Restaurant</a>
+            <a href="admin_login.html"         class="btn-hero btn-admin">    ⚙ Admin</a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ FEATURE STRIP ══════════════ -->
+<section class="features">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-6 col-md-3">
+                <div class="feature-item justify-content-center">
+                    <span class="icon">⚡</span> Instant Ordering
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="feature-item justify-content-center">
+                    <span class="icon">🔥</span> Hot & Fresh Food
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="feature-item justify-content-center">
+                    <span class="icon">🛡</span> Secure Payments
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="feature-item justify-content-center">
+                    <span class="icon">🌐</span> 500+ Stations
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ INFO CARDS ══════════════ -->
+<section class="cards-section">
+    <div class="container">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Simple Steps to Your Meal</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="info-card">
+                    <div class="icon-wrap ic-green">🔐</div>
+                    <h5>1. Register & Login</h5>
+                    <p>Create a free account in seconds. Login to access your personalized food menu and order history.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-card">
+                    <div class="icon-wrap ic-blue">🛒</div>
+                    <h5>2. Browse & Order</h5>
+                    <p>Choose from a wide variety of veg and non-veg items. Add to cart and select your delivery station, coach and seat.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-card">
+                    <div class="icon-wrap ic-orange">🍛</div>
+                    <h5>3. Get It Delivered</h5>
+                    <p>Pay securely online and receive your hot, fresh meal right at your train seat on time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="footer">
+    © <span id="year"></span> Railway Food Order System · All Rights Reserved
+</footer>
+
+<script src="data.js"></script>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

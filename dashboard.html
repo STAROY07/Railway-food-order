@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Railway Food Order</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(0,0,0,0.25);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+
+        .hero h1 {
+            font-weight: 800;
+            font-size: 40px;
+        }
+
+        .hero span {
+            color: #ffd700;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 15px auto;
+            opacity: 0.9;
+        }
+
+        .card-box {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            transition: 0.3s ease;
+            color: white;
+            height: 100%;
+        }
+
+        .card-box:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.18);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-custom {
+            border-radius: 50px;
+            font-weight: 600;
+            padding: 8px 24px;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.85;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="dashboard.html">🚆 Railway Food Order</a>
+
+    <div class="d-flex align-items-center">
+        <span class="me-3">
+            Welcome, <strong id="userNameDisplay">User</strong>
+        </span>
+        <a href="cart.html" class="btn btn-warning btn-sm me-2 position-relative">
+            🛒 Cart <span class="cart-badge badge bg-danger rounded-pill" style="display:none">0</span>
+        </a>
+        <button onclick="logoutUser()" class="btn btn-outline-light btn-sm">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Delicious Food, <span>Right On Track!</span></h1>
+    <p>
+        Enjoy fresh, hygienic and tasty meals delivered directly to your train seat.
+        Order anytime, anywhere and make your journey even more delightful.
+    </p>
+</section>
+
+<!-- DASHBOARD CARDS -->
+<div class="container pb-5">
+    <div class="row g-4">
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">🍽</div>
+                <h4>Order Food</h4>
+                <p class="small text-white-50">Explore our delicious veg and non-veg menu and satisfy your hunger.</p>
+                <a href="menu.html" class="btn btn-warning btn-custom mt-auto">View Menu</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">🛒</div>
+                <h4>My Cart</h4>
+                <p class="small text-white-50">Check items added and update your order easily.</p>
+                <a href="cart.html" class="btn btn-success btn-custom mt-auto">Open Cart</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">📦</div>
+                <h4>My Orders</h4>
+                <p class="small text-white-50">Track your previous and current food orders and live status.</p>
+                <a href="orders.html" class="btn btn-info btn-custom mt-auto text-white">View Orders</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">🚆</div>
+                <h4>Live Train Tracking</h4>
+                <p class="small text-white-50">Track train location & meal delivery progress in real-time.</p>
+                <a href="train_tracking.html" class="btn btn-light btn-custom mt-auto">Live Tracking</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">👤</div>
+                <h4>Profile</h4>
+                <p class="small text-white-50">Manage your personal details and preferences.</p>
+                <a href="profile.html" class="btn btn-dark btn-custom mt-auto">View Profile</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">💬</div>
+                <h4>Feedback & Reviews</h4>
+                <p class="small text-white-50">Share your journey experience and help us improve.</p>
+                <a href="feedback.html" class="btn btn-outline-info btn-custom mt-auto">Give Feedback</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">⚠️</div>
+                <h4>Complaints / Help</h4>
+                <p class="small text-white-50">Facing any issue with delivery or food? Let us know immediately.</p>
+                <a href="complaint.html" class="btn btn-outline-danger btn-custom mt-auto">Submit Complaint</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+            <div class="card card-box text-center p-4 shadow">
+                <div class="display-6 mb-2">🍴</div>
+                <h4>Restaurant Partner</h4>
+                <p class="small text-white-50">Join as a food partner at any railway station across India.</p>
+                <a href="register_restaurant.html" class="btn btn-warning btn-custom mt-auto">Partner With Us</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-text">
+        🚄 Fast Delivery | 🍽 Hygienic Food | 📍 Seat Service | 🕒 24/7 Available
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    const user = requireAuth('login.html');
+    if (user) {
+        document.getElementById('userNameDisplay').textContent = user.name || user.email;
+    }
+</script>
+
+</body>
+</html>

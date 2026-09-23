@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Railway Food Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #0f0e17;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+        .admin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .form-control {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+        }
+        .form-control:focus {
+            background: rgba(255,255,255,0.12);
+            color: white;
+            border-color: #f7971e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="admin-card">
+    <div class="text-center mb-4">
+        <div style="font-size: 40px;">⚙️</div>
+        <h3 class="fw-bold mt-2">Admin Portal</h3>
+        <p class="text-white-50 small">Railway Food Management & Control</p>
+    </div>
+
+    <div id="alertBox"></div>
+
+    <form id="adminLoginForm">
+        <div class="mb-3">
+            <label class="form-label text-white-50 small">Admin Email</label>
+            <input type="email" id="adminEmail" class="form-control" value="admin@railway.com" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label text-white-50 small">Admin Password</label>
+            <input type="password" id="adminPass" class="form-control" value="admin123" required>
+        </div>
+
+        <button type="submit" class="btn btn-warning w-100 rounded-pill py-2 fw-bold">Login as Admin</button>
+    </form>
+
+    <div class="text-center mt-4">
+        <a href="index.html" class="text-white-50 text-decoration-none small">← Back to Main Website</a>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('adminEmail').value;
+        const pass = document.getElementById('adminPass').value;
+
+        if (loginAdmin(email, pass)) {
+            document.getElementById('alertBox').innerHTML = '<div class="alert alert-success py-2 small">Authenticated! Opening Admin Dashboard...</div>';
+            setTimeout(() => window.location.href = 'admin_dashboard.html', 500);
+        } else {
+            document.getElementById('alertBox').innerHTML = '<div class="alert alert-danger py-2 small">Invalid Admin Credentials</div>';
+        }
+    });
+</script>
+
+</body>
+</html>
