@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Successful | Railway Food Order</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -27,15 +28,15 @@ body {
     width: 100%;
 }
 .check-icon {
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
     background: #dcfce7;
     color: #16a34a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    font-size: 36px;
     margin: 0 auto 20px;
 }
 </style>
@@ -44,7 +45,9 @@ body {
 <body>
 
 <div class="success-card">
-    <div class="check-icon">✓</div>
+    <div class="check-icon">
+        <i class="bi bi-check-lg"></i>
+    </div>
     <h3 class="fw-bold text-success">Order Confirmed!</h3>
     <p class="text-muted">Your food is being freshly prepared and will be delivered directly to your train seat.</p>
 
@@ -68,8 +71,12 @@ body {
     </div>
 
     <div class="d-grid gap-2">
-        <a href="receipt.html" class="btn btn-primary rounded-pill py-2">📄 View / Print Invoice</a>
-        <a href="orders.html" class="btn btn-outline-dark rounded-pill py-2">📦 Track My Order</a>
+        <a href="receipt.html" class="btn btn-primary rounded-pill py-2">
+            <i class="bi bi-file-earmark-text me-1"></i> View / Print Invoice
+        </a>
+        <a href="orders.html" class="btn btn-outline-dark rounded-pill py-2">
+            <i class="bi bi-box-seam me-1"></i> Track My Order
+        </a>
         <a href="dashboard.html" class="btn btn-link text-muted">Back to Dashboard</a>
     </div>
 </div>

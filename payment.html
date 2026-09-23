@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Gateway | Railway Food Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -56,7 +57,7 @@
             border-radius: 50px;
             padding: 14px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             width: 100%;
             margin-top: 20px;
         }
@@ -66,7 +67,7 @@
 
 <div class="pay-card">
     <div class="text-center mb-3">
-        <h4 class="fw-bold mb-1">💳 Secure Railway Payment</h4>
+        <h4 class="fw-bold mb-1"><i class="bi bi-shield-lock text-success me-2"></i>Secure Payment Gateway</h4>
         <p class="text-muted small">Instant Train Food Booking Confirmation</p>
     </div>
 
@@ -80,7 +81,7 @@
         <label class="pay-method selected" id="method-upi">
             <div class="d-flex align-items-center gap-2">
                 <input type="radio" name="payment_method" value="UPI (Google Pay / PhonePe / Paytm)" checked>
-                <span class="fw-semibold">⚡ UPI (GPay / PhonePe / Paytm)</span>
+                <span class="fw-semibold"><i class="bi bi-phone text-primary me-1"></i> UPI (GPay / PhonePe / Paytm)</span>
             </div>
             <span class="badge bg-success">Instant</span>
         </label>
@@ -88,7 +89,7 @@
         <label class="pay-method" id="method-card">
             <div class="d-flex align-items-center gap-2">
                 <input type="radio" name="payment_method" value="Debit / Credit Card">
-                <span class="fw-semibold">💳 Debit / Credit Card</span>
+                <span class="fw-semibold"><i class="bi bi-credit-card text-warning me-1"></i> Debit / Credit Card</span>
             </div>
             <span class="text-muted small">Visa / Master</span>
         </label>
@@ -96,7 +97,7 @@
         <label class="pay-method" id="method-net">
             <div class="d-flex align-items-center gap-2">
                 <input type="radio" name="payment_method" value="Net Banking">
-                <span class="fw-semibold">🏦 Net Banking</span>
+                <span class="fw-semibold"><i class="bi bi-bank text-info me-1"></i> Net Banking</span>
             </div>
             <span class="text-muted small">All Banks</span>
         </label>
@@ -104,7 +105,7 @@
         <label class="pay-method" id="method-cod">
             <div class="d-flex align-items-center gap-2">
                 <input type="radio" name="payment_method" value="Cash on Seat Delivery">
-                <span class="fw-semibold">💵 Cash on Seat Delivery (COD)</span>
+                <span class="fw-semibold"><i class="bi bi-cash-stack text-success me-1"></i> Cash on Seat Delivery</span>
             </div>
             <span class="badge bg-secondary">Seat Delivery</span>
         </label>
@@ -115,12 +116,12 @@
         </div>
 
         <button type="submit" class="btn btn-confirm-pay" id="payBtn">
-            Pay & Confirm Order 🚆
+            <i class="bi bi-check-circle me-1"></i> Pay & Confirm Order
         </button>
     </form>
 
     <div class="text-center mt-3">
-        <small class="text-muted">🔒 256-bit Encrypted Railway Payment</small>
+        <small class="text-muted"><i class="bi bi-lock-fill"></i> 256-bit Encrypted Railway Payment</small>
     </div>
 </div>
 
@@ -150,12 +151,11 @@
         e.preventDefault();
         const payBtn = document.getElementById('payBtn');
         payBtn.disabled = true;
-        payBtn.innerHTML = 'Processing Payment... ⏳';
+        payBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Processing Payment...';
 
         const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
 
         setTimeout(() => {
-            // Save Order to LocalStorage
             const orders = JSON.parse(localStorage.getItem('rf_orders') || '[]');
             const orderId = Math.floor(100000 + Math.random() * 900000);
 
@@ -180,7 +180,6 @@
             orders.unshift(newOrder);
             localStorage.setItem('rf_orders', JSON.stringify(orders));
 
-            // Clear Cart and Pending
             clearCart();
             sessionStorage.removeItem('rf_pending_checkout');
             sessionStorage.setItem('rf_last_order', JSON.stringify(newOrder));

@@ -6,7 +6,8 @@
     <title>Railway Food Order System | Fresh Meals On Track</title>
     <meta name="description" content="Order delicious fresh meals delivered right to your train seat across India. Fast, easy, and tasty!">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -65,24 +66,26 @@
         }
 
         .badge-top {
-            display: inline-block;
-            background: rgba(247,151,30,0.18);
-            border: 1px solid rgba(247,151,30,0.5);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(247,151,30,0.15);
+            border: 1px solid rgba(247,151,30,0.4);
             color: #f7971e;
             border-radius: 50px;
-            padding: 6px 20px;
+            padding: 7px 22px;
             font-size: 13px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 22px;
+            margin-bottom: 24px;
             animation: fadeDown 0.6s ease both;
         }
 
         h1.hero-title {
-            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-size: clamp(2.8rem, 7vw, 5.2rem);
             font-weight: 900;
-            line-height: 1.1;
+            line-height: 1.15;
             margin-bottom: 22px;
             animation: fadeDown 0.7s ease 0.1s both;
         }
@@ -96,7 +99,7 @@
         .hero-sub {
             font-size: 1.15rem;
             color: rgba(255,255,255,0.7);
-            max-width: 520px;
+            max-width: 540px;
             margin: 0 auto 40px;
             line-height: 1.7;
             animation: fadeDown 0.7s ease 0.2s both;
@@ -111,14 +114,14 @@
             animation: fadeDown 0.7s ease 0.3s both;
         }
         .btn-hero {
-            padding: 14px 34px;
+            padding: 13px 30px;
             border-radius: 50px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 15px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -143,24 +146,24 @@
         /* ── FEATURES STRIP ── */
         .features {
             background: #0f0c29;
-            padding: 20px 0;
+            padding: 22px 0;
             border-top: 1px solid rgba(255,255,255,0.07);
         }
         .feature-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: rgba(255,255,255,0.65);
+            color: rgba(255,255,255,0.7);
             font-size: 14px;
             font-weight: 500;
-            padding: 10px 30px;
+            padding: 10px 20px;
         }
-        .feature-item .icon { font-size: 22px; }
+        .feature-item i { font-size: 18px; color: #f7971e; }
 
         /* ── CARDS SECTION ── */
         .cards-section {
             background: linear-gradient(180deg, #0f0c29 0%, #1a1a2e 100%);
-            padding: 70px 20px;
+            padding: 80px 20px;
         }
         .section-label {
             text-align: center;
@@ -174,14 +177,14 @@
         .section-title {
             text-align: center;
             color: white;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
             font-weight: 800;
             margin-bottom: 50px;
         }
 
         .info-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 20px;
             padding: 36px 28px;
             text-align: center;
@@ -191,29 +194,29 @@
         }
         .info-card:hover {
             transform: translateY(-8px);
-            background: rgba(255,255,255,0.09);
+            background: rgba(255,255,255,0.08);
             border-color: rgba(247,151,30,0.4);
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
         .info-card .icon-wrap {
-            width: 64px; height: 64px;
+            width: 60px; height: 60px;
             border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 28px;
+            font-size: 24px;
             margin: 0 auto 20px;
         }
-        .ic-green  { background: rgba(34,197,94,0.15); }
-        .ic-blue   { background: rgba(59,130,246,0.15); }
-        .ic-orange { background: rgba(247,151,30,0.15); }
+        .ic-green  { background: rgba(34,197,94,0.15); color: #22c55e; }
+        .ic-blue   { background: rgba(59,130,246,0.15); color: #3b82f6; }
+        .ic-orange { background: rgba(247,151,30,0.15); color: #f7971e; }
         .info-card h5 { font-weight: 700; margin-bottom: 10px; font-size: 18px; }
         .info-card p  { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6; }
 
         /* ── FOOTER ── */
         .footer {
             background: #07060f;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.45);
             text-align: center;
-            padding: 20px;
+            padding: 24px;
             font-size: 13px;
         }
 
@@ -233,22 +236,24 @@
     <div class="track"></div>
 
     <div class="hero-content">
-        <div class="badge-top">🚆 India's #1 Railway Food Platform</div>
+        <div class="badge-top">
+            <i class="bi bi-train-front"></i> India's #1 Railway Food Platform
+        </div>
 
         <h1 class="hero-title">
             Food Delivered<br>
-            <span class="gradient-text">To Your Seat 🍽</span>
+            <span class="gradient-text">To Your Seat</span>
         </h1>
 
         <p class="hero-sub">
-            Order fresh, hot meals from top restaurants and get them delivered directly to your train seat anywhere across India.
+            Order fresh, hot meals from top certified restaurants and get them delivered directly to your train coach and seat across India.
         </p>
 
         <div class="btn-group-hero">
-            <a href="login.html"               class="btn-hero btn-login">    🔐 Login</a>
-            <a href="register.html"            class="btn-hero btn-register"> 📝 Register</a>
-            <a href="register_restaurant.html" class="btn-hero btn-rest">     🍴 Register Restaurant</a>
-            <a href="admin_login.html"         class="btn-hero btn-admin">    ⚙ Admin</a>
+            <a href="login.html"               class="btn-hero btn-login">    <i class="bi bi-box-arrow-in-right"></i> Login</a>
+            <a href="register.html"            class="btn-hero btn-register"> <i class="bi bi-person-plus"></i> Register</a>
+            <a href="register_restaurant.html" class="btn-hero btn-rest">     <i class="bi bi-shop"></i> Register Restaurant</a>
+            <a href="admin_login.html"         class="btn-hero btn-admin">    <i class="bi bi-shield-lock"></i> Admin</a>
         </div>
     </div>
 </section>
@@ -259,22 +264,22 @@
         <div class="row justify-content-center text-center">
             <div class="col-6 col-md-3">
                 <div class="feature-item justify-content-center">
-                    <span class="icon">⚡</span> Instant Ordering
+                    <i class="bi bi-lightning-charge-fill"></i> Instant Ordering
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="feature-item justify-content-center">
-                    <span class="icon">🔥</span> Hot & Fresh Food
+                    <i class="bi bi-fire"></i> Fresh & Hot Meals
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="feature-item justify-content-center">
-                    <span class="icon">🛡</span> Secure Payments
+                    <i class="bi bi-shield-check"></i> Secure Payments
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="feature-item justify-content-center">
-                    <span class="icon">🌐</span> 500+ Stations
+                    <i class="bi bi-geo-alt-fill"></i> 500+ Stations
                 </div>
             </div>
         </div>
@@ -290,23 +295,23 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="info-card">
-                    <div class="icon-wrap ic-green">🔐</div>
+                    <div class="icon-wrap ic-green"><i class="bi bi-person-check-fill"></i></div>
                     <h5>1. Register & Login</h5>
-                    <p>Create a free account in seconds. Login to access your personalized food menu and order history.</p>
+                    <p>Create a verified account in seconds. Login to access your customized railway food menu and order history.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="info-card">
-                    <div class="icon-wrap ic-blue">🛒</div>
+                    <div class="icon-wrap ic-blue"><i class="bi bi-cart-check-fill"></i></div>
                     <h5>2. Browse & Order</h5>
-                    <p>Choose from a wide variety of veg and non-veg items. Add to cart and select your delivery station, coach and seat.</p>
+                    <p>Choose from wide varieties of veg and non-veg delicacies. Add to cart and specify your station, coach and seat.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="info-card">
-                    <div class="icon-wrap ic-orange">🍛</div>
-                    <h5>3. Get It Delivered</h5>
-                    <p>Pay securely online and receive your hot, fresh meal right at your train seat on time.</p>
+                    <div class="icon-wrap ic-orange"><i class="bi bi-box2-heart-fill"></i></div>
+                    <h5>3. Delivered at Seat</h5>
+                    <p>Pay securely via UPI or cards and receive freshly packed hot meals at your train berth on arrival.</p>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veg Items | Railway Food Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -54,17 +55,36 @@
             background: #1b5e20;
             color: white;
         }
+        .badge-veg-dot {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #2e7d32;
+            padding: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+        }
+        .badge-veg-dot::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #2e7d32;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-veg sticky-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="dashboard.html">🥗 Railway Food Order (Veg)</a>
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="dashboard.html">
+            <span class="badge-veg-dot bg-white"></span> Pure Vegetarian Menu
+        </a>
         <div class="d-flex align-items-center gap-2">
-            <a href="menu.html" class="btn btn-outline-light btn-sm">Menu Categories</a>
-            <a href="cart.html" class="btn btn-warning btn-sm position-relative">
-                🛒 Cart <span class="cart-badge badge bg-danger rounded-pill" style="display:none">0</span>
+            <a href="menu.html" class="btn btn-outline-light btn-sm rounded-pill">Menu Categories</a>
+            <a href="cart.html" class="btn btn-warning btn-sm position-relative rounded-pill px-3">
+                <i class="bi bi-cart3 me-1"></i> Cart <span class="cart-badge badge bg-danger rounded-pill" style="display:none">0</span>
             </a>
         </div>
     </div>
@@ -72,11 +92,14 @@
 
 <div class="container py-4">
     <div class="text-center mb-4">
-        <h2 class="fw-bold text-success">🥗 Pure Vegetarian Delights</h2>
+        <h2 class="fw-bold text-success">Pure Vegetarian Delights</h2>
         <p class="text-muted">Freshly prepared pure vegetarian dishes delivered straight to your train seat</p>
         
         <div class="search-bar">
-            <input type="text" id="searchInput" class="form-control form-control-lg fs-6 rounded-pill shadow-sm" placeholder="🔍 Search dishes (Paneer, Biryani, Dosa, Thali...)">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                <input type="text" id="searchInput" class="form-control form-control-lg fs-6 border-start-0 rounded-end-pill shadow-sm" placeholder="Search dishes (Paneer, Biryani, Dosa, Thali...)">
+            </div>
         </div>
     </div>
 
@@ -183,11 +206,14 @@
                     <img src="${item[2]}" class="food-img" alt="${item[0]}" loading="lazy">
                     <div class="p-3 d-flex flex-column justify-content-between flex-grow-1">
                         <div>
-                            <h6 class="fw-bold mb-1 text-dark">${item[0]}</h6>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="badge-veg-dot"></span>
+                                <h6 class="fw-bold mb-0 text-dark">${item[0]}</h6>
+                            </div>
                             <div class="price-tag mb-2">₹${item[1]}</div>
                         </div>
                         <button onclick="addToCart('${item[0].replace(/'/g, "\\'")}', ${item[1]}, '${item[2]}')" class="btn btn-add-cart w-100 btn-sm py-2">
-                            🛒 Add to Cart
+                            <i class="bi bi-cart-plus me-1"></i> Add to Cart
                         </button>
                     </div>
                 </div>

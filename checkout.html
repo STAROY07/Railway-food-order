@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout | Railway Food Order</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -31,7 +32,7 @@ body{
     background: linear-gradient(135deg, #f7971e, #ffd200);
     color: #212529;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     padding: 14px;
     border-radius: 50px;
     border: none;
@@ -55,7 +56,7 @@ body{
 
 <div class="checkout-card">
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <h3 class="fw-bold mb-0">🚆 Train Delivery Details</h3>
+        <h4 class="fw-bold mb-0"><i class="bi bi-geo-alt-fill text-warning me-2"></i>Train Delivery Details</h4>
         <a href="cart.html" class="text-muted text-decoration-none small">← Back to Cart</a>
     </div>
     <p class="text-muted small mb-4">Enter your journey details to receive food directly at your seat.</p>
@@ -71,34 +72,51 @@ body{
     <form id="checkoutForm">
         <div class="mb-3">
             <label class="form-label fw-semibold">Delivery Station</label>
-            <select id="station" class="form-select" required>
-                <option value="">-- Select Delivery Railway Station --</option>
-            </select>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                <select id="station" class="form-select" required>
+                    <option value="">-- Select Delivery Railway Station --</option>
+                </select>
+            </div>
         </div>
 
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Train PNR Number</label>
-                <input type="text" id="pnr" class="form-control" placeholder="10-digit PNR" maxlength="10" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-ticket-perforated"></i></span>
+                    <input type="text" id="pnr" class="form-control" placeholder="10-digit PNR" maxlength="10" required>
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Coach / Bogie</label>
-                <input type="text" id="coach" class="form-control" placeholder="e.g. B2, S4, A1" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-train-front"></i></span>
+                    <input type="text" id="coach" class="form-control" placeholder="e.g. B2, S4, A1" required>
+                </div>
             </div>
         </div>
 
         <div class="row g-3 mb-4">
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Seat / Berth No.</label>
-                <input type="text" id="seat" class="form-control" placeholder="e.g. 42 (Upper/Lower)" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-layout-sidebar-inset"></i></span>
+                    <input type="text" id="seat" class="form-control" placeholder="e.g. 42 (Upper/Lower)" required>
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Passenger Contact</label>
-                <input type="tel" id="contact" class="form-control" placeholder="Mobile Number" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                    <input type="tel" id="contact" class="form-control" placeholder="Mobile Number" required>
+                </div>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-pay">Proceed to Payment 💳</button>
+        <button type="submit" class="btn btn-pay">
+            <i class="bi bi-credit-card me-1"></i> Proceed to Payment
+        </button>
     </form>
 </div>
 
@@ -136,7 +154,6 @@ body{
         const seat = document.getElementById('seat').value;
         const contact = document.getElementById('contact').value;
 
-        // Store checkout details in temporary session
         const checkoutData = {
             station,
             pnr,

@@ -260,7 +260,7 @@ function showToast(msg, bg = '#16a34a') {
     }
     const toast = document.createElement('div');
     toast.style.cssText = `background:${bg};color:#fff;padding:12px 22px;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,0.3);display:flex;align-items:center;gap:8px;animation:fadeIn 0.3s ease;`;
-    toast.innerHTML = `<span>✔</span> ${msg}`;
+    toast.innerHTML = `<i class="bi bi-check2-circle me-1"></i> ${msg}`;
     container.appendChild(toast);
     setTimeout(() => {
         toast.style.opacity = '0';

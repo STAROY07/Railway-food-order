@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Railway Food Order</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,6 +16,7 @@
       align-items: center;
       justify-content: center;
       color: #333;
+      padding: 20px;
     }
     .auth-card {
       background: white;
@@ -23,6 +25,18 @@
       width: 100%;
       max-width: 420px;
       padding: 35px;
+    }
+    .logo-badge {
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto 15px;
     }
     .btn-login {
       background: linear-gradient(90deg, #22c55e, #16a34a);
@@ -42,9 +56,11 @@
 
 <div class="auth-card">
   <div class="text-center mb-4">
-    <div style="font-size: 38px;">🚆</div>
-    <h3 class="fw-bold text-dark mt-2">User Login</h3>
-    <p class="text-muted small">Access delicious food for your train journey</p>
+    <div class="logo-badge">
+      <i class="bi bi-person-fill-lock"></i>
+    </div>
+    <h3 class="fw-bold text-dark mt-2">Passenger Login</h3>
+    <p class="text-muted small">Access your train journey meals & orders</p>
   </div>
 
   <div id="alertBox"></div>
@@ -52,15 +68,23 @@
   <form id="loginForm">
     <div class="mb-3">
       <label class="form-label fw-semibold">Email Address</label>
-      <input type="email" id="email" class="form-control form-control-lg fs-6" placeholder="Enter your email" value="user@example.com" required>
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+        <input type="email" id="email" class="form-control" placeholder="Enter your email" value="user@example.com" required>
+      </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label fw-semibold">Password</label>
-      <input type="password" id="password" class="form-control form-control-lg fs-6" placeholder="Enter password" value="password123" required>
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-key"></i></span>
+        <input type="password" id="password" class="form-control" placeholder="Enter password" value="password123" required>
+      </div>
     </div>
 
-    <button type="submit" class="btn btn-login w-100 mt-2">Login to Account</button>
+    <button type="submit" class="btn btn-login w-100 mt-2">
+      <i class="bi bi-box-arrow-in-right me-1"></i> Login to Account
+    </button>
   </form>
 
   <div class="text-center mt-4">
@@ -84,7 +108,7 @@
       alertBox.innerHTML = '<div class="alert alert-success py-2 small">Login successful! Redirecting...</div>';
       setTimeout(() => {
         window.location.href = 'dashboard.html';
-      }, 600);
+      }, 500);
     } else {
       alertBox.innerHTML = `<div class="alert alert-danger py-2 small">${res.message}</div>`;
     }
